@@ -1,4 +1,4 @@
-package com.potato;
+package com.potato.demo;
 
 import java.io.DataInputStream;
 import java.io.FileOutputStream;

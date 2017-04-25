@@ -6,7 +6,7 @@ import java.net.URLEncoder;
 /**
  * Created by AllstarVirgo on 2017/4/19.
  */
-public class PostParams {
+public class  PostParams {
     private String stock;
     private String searchkey;
     private String plate;

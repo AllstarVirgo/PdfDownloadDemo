@@ -1,6 +1,7 @@
 package com.potato.util;
 
 import com.potato.tags.Constant;
+import com.potato.tags.PostParams;
 import com.potato.tags.SinglePdf;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -15,7 +16,6 @@ import org.apache.http.util.EntityUtils;
 import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by AllstarVirgo on 2017/4/25.
@@ -31,14 +31,18 @@ public class UrlFactory implements Runnable {
 
     private boolean hasNextPage;
 
+    private PostParams postParams;
 
-    public UrlFactory(BlockingQueue<String> queue) {
+
+    public UrlFactory(BlockingQueue<String> queue,Map<String,SinglePdf>pdfMap) {
         closeableHttpClient = HttpClients.createDefault();
         httpPost = new HttpPost(Constant.requestURL);
         httpPost.setConfig(Constant.requestConfig);
-
-        pdfMap=new ConcurrentHashMap<>();
+        hasNextPage=true;
+        this.pdfMap=pdfMap;
         this.queue = queue;
+        postParams=new PostParams(Constant._ZENGFA,"szse",
+                "历史公告查询","1","30","fulltext","请选择日期");
     }
 
     /**
@@ -57,14 +61,31 @@ public class UrlFactory implements Runnable {
     @Override
     public void run() {
         try {
-            addUrl();
+            addUrl(postParams);
             queue.put(Constant.flag);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
-    private void addUrl() throws InterruptedException {
+    private void addUrl(PostParams postParams) throws InterruptedException {
+        int i=1;
+        while (hasNextPage){
+            postParams.setPageNum(new Integer(i).toString());
+
+            String post=postParams.toString();
+
+            initializePost(post);
+
+            getSinglePageUrl();
+
+            i++;
+        }
+    }
+
+
+
+    private void getSinglePageUrl() throws InterruptedException {
         try {
             CloseableHttpResponse response = closeableHttpClient.execute(httpPost);
             HttpEntity entity = response.getEntity();
@@ -75,6 +96,10 @@ public class UrlFactory implements Runnable {
             JSONObject jsonObject = JSONObject.fromObject(jasonObj);
             /*得到jason字符串格式的数组*/
             String contentJason=jsonObject.getString("announcements");
+            /*是否有更多*/
+            String hasMore=jsonObject.getString("hasMore");
+            if(hasMore.equals("true"))hasNextPage=true;
+            else hasNextPage=false;
             /*转换为jason数组*/
             JSONArray jsonArray=JSONArray.fromObject(contentJason);
             /*每个索引对应一个Jason文本，需要生成jason对象,获取其中数据*/
@@ -92,7 +117,7 @@ public class UrlFactory implements Runnable {
     public SinglePdf getPdfInfo(String jasonAnnouncement){
         JSONObject jsonObject=JSONObject.fromObject(jasonAnnouncement);
         return new SinglePdf(jsonObject.getString("secCode"),jsonObject.getString("secName"),jsonObject.getString("announcementTitle")
-        ,jsonObject.getString("adjunctUrl"));
+        ,jsonObject.getString("announcementTime"),jsonObject.getString("adjunctUrl"));
     }
 
 

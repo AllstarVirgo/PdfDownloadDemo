@@ -16,6 +16,12 @@ public class Constant {
 
     public static String flag = "flag";
 
+    public static final String _ZENGFA="category_zf_szsh;";
+
+    public static final String _PEIGU="category_pg_szsh;";
+
+    public static final String absURL="http://www.cninfo.com.cn/cninfo-new/disclosure/szse/download/";
+
     public static final String requestURL = "http://www.cninfo.com.cn/cninfo-new/announcement/query";
 
     public static final RequestConfig requestConfig = RequestConfig.custom()

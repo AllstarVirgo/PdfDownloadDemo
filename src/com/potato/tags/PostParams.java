@@ -23,6 +23,16 @@ public class  PostParams {
     private String showTitle;
     private String seDate;
 
+    public PostParams(String category, String column, String columnTitle, String pageNum, String pageSize, String tabName, String seDate) {
+        this.category = category;
+        this.column = column;
+        this.columnTitle = columnTitle;
+        this.pageNum = pageNum;
+        this.pageSize = pageSize;
+        this.tabName = tabName;
+        this.seDate = seDate;
+    }
+
     @Override
     public String toString() {
         StringBuffer postParams = new StringBuffer();
@@ -54,5 +64,9 @@ public class  PostParams {
             }
         }
         return result;
+    }
+
+    public void setPageNum(String pageNum) {
+        this.pageNum = pageNum;
     }
 }

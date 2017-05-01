@@ -33,7 +33,11 @@ public class UrlFactory implements Runnable {
 
     private PostParams postParams;
 
-
+    /**
+     * 初始化post参数的相关信息
+     * @param queue
+     * @param pdfMap
+     */
     public UrlFactory(BlockingQueue<String> queue,Map<String,SinglePdf>pdfMap) {
         closeableHttpClient = HttpClients.createDefault();
         httpPost = new HttpPost(Constant.requestURL);
@@ -41,7 +45,7 @@ public class UrlFactory implements Runnable {
         hasNextPage=true;
         this.pdfMap=pdfMap;
         this.queue = queue;
-        postParams=new PostParams(Constant._ZENGFA,"szse",
+        postParams=new PostParams(Constant.HSPLATE,Constant._QITARONGZISS,"sse",
                 "历史公告查询","1","30","fulltext","请选择日期");
     }
 

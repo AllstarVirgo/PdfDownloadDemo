@@ -23,7 +23,8 @@ public class  PostParams {
     private String showTitle;
     private String seDate;
 
-    public PostParams(String category, String column, String columnTitle, String pageNum, String pageSize, String tabName, String seDate) {
+    public PostParams(String plate,String category, String column, String columnTitle, String pageNum, String pageSize, String tabName, String seDate) {
+        this.plate=plate;
         this.category = category;
         this.column = column;
         this.columnTitle = columnTitle;

@@ -17,7 +17,7 @@ public class SinglePdf {
 
     private String adjunctUrl;
 
-    private String tag=Constant.PEIGU;
+    private String tag=Constant.QITA;
 
     private Date date;
 

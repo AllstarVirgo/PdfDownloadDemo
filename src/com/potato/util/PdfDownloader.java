@@ -66,24 +66,9 @@ public class PdfDownloader implements Runnable{
 
             int fileLenght = httpURLConnection.getContentLength();
             System.out.println("文件大小：" + (fileLenght / 1024.0) + " KB");
-/*            String str=httpURLConnection.getHeaderField("Content-disposition");
-
-            String name=strProduct();
-
-            if (str.contains("filename=")){
-                int index=str.indexOf("\"");
-
-                int endIndex=str.lastIndexOf(".");
-
-//                String filenameWithEnd=str.substring(index+1,str.length()-1);
-
-                String nameBytes=str.substring(index+1,endIndex);
-
-                name=getURLDecoderString(nameBytes);
-            }*/
             System.out.println("开始下载...");
             try (DataInputStream dis = new DataInputStream(httpURLConnection.getInputStream());
-                 FileOutputStream fos = new FileOutputStream("data\\szzf\\"+name+".pdf")) {
+                 FileOutputStream fos = new FileOutputStream("data\\hsqitarongzi\\"+name+".pdf")) {
                 byte[] buf = new byte[10240]; // 根据实际情况可以 增大 buf 大小
                 for (int readSize; (readSize = dis.read(buf)) > 0;) {
                     fos.write(buf, 0, readSize);

@@ -14,11 +14,15 @@ public class Constant {
 
     public final static String ENCODE = "utf-8";
 
+    public static final String HSPLATE ="shmb;" ;
+
     public static String flag = "flag";
 
     public static final String _ZENGFA="category_zf_szsh;";
 
     public static final String _PEIGU="category_pg_szsh;";
+
+    public static final String _QITARONGZISS="category_qtrz_szsh;";
 
     public static final String absURL="http://www.cninfo.com.cn/cninfo-new/disclosure/szse/download/";
 
